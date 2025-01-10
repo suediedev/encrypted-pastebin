@@ -1,0 +1,19 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Snippet {
+  id            String      @id @default(cuid())
+  content       String      // Encrypted content
+  iv            String      // Initialization vector for encryption
+  salt          String?     // Salt for password hashing
+  passwordHash  String?     // Hashed password if protected
+  expiresAt     DateTime?   // Expiration time
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
+}
